@@ -16,6 +16,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bear"]];
+//    imageView.frame = CGRectMake(0, 0, 200, 200);
+//
+//    [self.view addSubview:imageView];
 
     self.view.backgroundColor = [UIColor lightGrayColor];
     
@@ -29,12 +34,30 @@
     
     UIImage *image = [UIImage imageNamed:@"bear"];
     
+    /**
+     *  Contents
+     */
     layerView.layer.contents = (__bridge id _Nullable)(image.CGImage);
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bear"]];
-    imageView.frame = CGRectMake(0, 0, 200, 200);
+    /**
+     *  ContentsGravity
+     */
+    layerView.layer.contentsGravity = kCAGravityCenter;
     
-    [self.view addSubview:imageView];
+    /**
+     *  ContentsScale
+     */
+    layerView.layer.contentsScale = image.scale;
+    
+    /**
+     *  MasksToBounds
+     */
+    layerView.layer.masksToBounds = YES;
+    
+    /**
+     *  contentsRect
+     */
+    layerView.layer.contentsRect = CGRectMake(0, 0, 1.1, 1.1);
 }
 
 @end
