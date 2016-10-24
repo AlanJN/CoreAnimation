@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A42B96061DBE68D10001950F"
-               BuildableName = "3.Layer Geometry.app"
-               BlueprintName = "3.Layer Geometry"
-               ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+               BlueprintIdentifier = "A4CBE4F01DBE6B3100F8477D"
+               BuildableName = "3.LayerGeometry.app"
+               BlueprintName = "3.LayerGeometry"
+               ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A42B961F1DBE68D10001950F"
-               BuildableName = "3.Layer GeometryTests.xctest"
-               BlueprintName = "3.Layer GeometryTests"
-               ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+               BlueprintIdentifier = "A4CBE5091DBE6B3100F8477D"
+               BuildableName = "3.LayerGeometryTests.xctest"
+               BlueprintName = "3.LayerGeometryTests"
+               ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A42B962A1DBE68D10001950F"
-               BuildableName = "3.Layer GeometryUITests.xctest"
-               BlueprintName = "3.Layer GeometryUITests"
-               ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+               BlueprintIdentifier = "A4CBE5141DBE6B3100F8477D"
+               BuildableName = "3.LayerGeometryUITests.xctest"
+               BlueprintName = "3.LayerGeometryUITests"
+               ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A42B96061DBE68D10001950F"
-            BuildableName = "3.Layer Geometry.app"
-            BlueprintName = "3.Layer Geometry"
-            ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+            BlueprintIdentifier = "A4CBE4F01DBE6B3100F8477D"
+            BuildableName = "3.LayerGeometry.app"
+            BlueprintName = "3.LayerGeometry"
+            ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A42B96061DBE68D10001950F"
-            BuildableName = "3.Layer Geometry.app"
-            BlueprintName = "3.Layer Geometry"
-            ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+            BlueprintIdentifier = "A4CBE4F01DBE6B3100F8477D"
+            BuildableName = "3.LayerGeometry.app"
+            BlueprintName = "3.LayerGeometry"
+            ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A42B96061DBE68D10001950F"
-            BuildableName = "3.Layer Geometry.app"
-            BlueprintName = "3.Layer Geometry"
-            ReferencedContainer = "container:3.Layer Geometry.xcodeproj">
+            BlueprintIdentifier = "A4CBE4F01DBE6B3100F8477D"
+            BuildableName = "3.LayerGeometry.app"
+            BlueprintName = "3.LayerGeometry"
+            ReferencedContainer = "container:3.LayerGeometry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

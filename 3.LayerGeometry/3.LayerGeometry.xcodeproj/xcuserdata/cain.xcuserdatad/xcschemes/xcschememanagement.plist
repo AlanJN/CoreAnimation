@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>3.Layer Geometry.xcscheme</key>
+		<key>3.LayerGeometry.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,17 +12,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A42B96061DBE68D10001950F</key>
+		<key>A4CBE4F01DBE6B3100F8477D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A42B961F1DBE68D10001950F</key>
+		<key>A4CBE5091DBE6B3100F8477D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A42B962A1DBE68D10001950F</key>
+		<key>A4CBE5141DBE6B3100F8477D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

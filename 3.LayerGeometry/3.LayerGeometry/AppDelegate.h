@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  3.Layer Geometry
+//  3.LayerGeometry
 //
 //  Created by Cain Luo on 25/10/16.
 //  Copyright © 2016年 Cain Luo. All rights reserved.

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:3.Layer Geometry.xcodeproj">
+      location = "self:3.LayerGeometry.xcodeproj">
    </FileRef>
 </Workspace>

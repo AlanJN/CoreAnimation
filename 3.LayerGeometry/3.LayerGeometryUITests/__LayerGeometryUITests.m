@@ -1,6 +1,6 @@
 //
-//  __Layer_GeometryUITests.m
-//  3.Layer GeometryUITests
+//  __LayerGeometryUITests.m
+//  3.LayerGeometryUITests
 //
 //  Created by Cain Luo on 25/10/16.
 //  Copyright © 2016年 Cain Luo. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface __Layer_GeometryUITests : XCTestCase
+@interface __LayerGeometryUITests : XCTestCase
 
 @end
 
-@implementation __Layer_GeometryUITests
+@implementation __LayerGeometryUITests
 
 - (void)setUp {
     [super setUp];
