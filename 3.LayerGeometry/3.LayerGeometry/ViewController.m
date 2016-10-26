@@ -20,7 +20,8 @@
 //    [self logViewAndLayer];
 //    [self layerTransform];
 //    [self viewAnchorPoint];
-    [self layerGeometryFlipped];
+//    [self layerGeometryFlipped];
+    [self viewsZPosition];
 }
 
 /**
@@ -115,6 +116,24 @@
     [view.layer addSublayer:layer];
     
     [self.view addSubview:view];
+}
+
+/**
+ *  The Z Axis
+ */
+- (void)viewsZPosition {
+    
+    UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    greenView.backgroundColor = [UIColor greenColor];
+    greenView.layer.zPosition = 1.0f;
+    
+    UIView *redView = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 100, 100)];
+    
+    redView.backgroundColor = [UIColor redColor];
+    
+    [self.view addSubview:greenView];
+    [self.view addSubview:redView];
 }
 
 @end
