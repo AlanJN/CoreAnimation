@@ -18,7 +18,8 @@
     [super viewDidLoad];
     
 //    [self logViewAndLayer];
-    [self layerTransform];
+//    [self layerTransform];
+    [self viewAnchorPoint];
 }
 
 /**
@@ -65,6 +66,34 @@
     NSLog(@"Layer Frame Height: %f", view.layer.frame.size.height);
     NSLog(@"Layer Bounds Width: %f", view.layer.bounds.size.width);
     NSLog(@"Layer Bounds Height: %f", view.layer.bounds.size.height);
+}
+
+/**
+ *  AnchorPoint
+ */
+- (void)viewAnchorPoint {
+    
+    UIView *viewOne = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+
+    viewOne.backgroundColor = [UIColor grayColor];
+
+    NSLog(@"before X: %f", viewOne.layer.frame.origin.x);
+    NSLog(@"before Y: %f", viewOne.layer.frame.origin.y);
+    
+    // change anchorPoint
+    viewOne.layer.anchorPoint = CGPointMake(0.1f, 0.1f);
+
+    NSLog(@"After X: %f", viewOne.layer.frame.origin.x);
+    NSLog(@"After Y:%f", viewOne.layer.frame.origin.y);
+    
+    UIView *viewTwo = [[UIView alloc] init];
+    
+    viewTwo.backgroundColor = [UIColor redColor];
+    viewTwo.bounds = CGRectMake(0, 0, 100, 100);
+    viewTwo.center = viewOne.center;
+
+    [self.view addSubview:viewOne];
+    [self.view addSubview:viewTwo];
 }
 
 @end
