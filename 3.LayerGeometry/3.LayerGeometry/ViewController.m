@@ -19,7 +19,8 @@
     
 //    [self logViewAndLayer];
 //    [self layerTransform];
-    [self viewAnchorPoint];
+//    [self viewAnchorPoint];
+    [self layerGeometryFlipped];
 }
 
 /**
@@ -94,6 +95,26 @@
 
     [self.view addSubview:viewOne];
     [self.view addSubview:viewTwo];
+}
+
+/**
+ *  GeometryFlipped
+ */
+- (void)layerGeometryFlipped {
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    view.backgroundColor = [UIColor blueColor];
+    view.layer.geometryFlipped = YES;
+    
+    CALayer *layer = [CALayer layer];
+    
+    layer.frame = CGRectMake(0, 0, 25, 25);
+    layer.backgroundColor = [UIColor redColor].CGColor;
+    
+    [view.layer addSublayer:layer];
+    
+    [self.view addSubview:view];
 }
 
 @end
