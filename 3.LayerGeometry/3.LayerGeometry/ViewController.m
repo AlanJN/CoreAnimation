@@ -10,6 +10,9 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, strong) CALayer *blueLayer;
+
 @end
 
 @implementation ViewController
@@ -21,7 +24,8 @@
 //    [self layerTransform];
 //    [self viewAnchorPoint];
 //    [self layerGeometryFlipped];
-    [self viewsZPosition];
+//    [self viewsZPosition];
+    [self hitTestingLayer];
 }
 
 /**
@@ -134,6 +138,52 @@
     
     [self.view addSubview:greenView];
     [self.view addSubview:redView];
+}
+
+/**
+ *  Hit Testing
+ */
+- (void)hitTestingLayer {
+    
+    _backgroundView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    _backgroundView.backgroundColor = [UIColor grayColor];
+    
+    _blueLayer = [CALayer layer];
+    
+    _blueLayer.backgroundColor = [UIColor blueColor].CGColor;
+    _blueLayer.frame = CGRectMake(25, 25, 50, 50);
+    
+    [_backgroundView.layer addSublayer:_blueLayer];
+    
+    [self.view addSubview:_backgroundView];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    
+    CALayer *layer = [self.backgroundView.layer hitTest:point];
+    
+    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"你点击了屏幕"
+                                                       message:@""
+                                                      delegate:nil
+                                             cancelButtonTitle:@"确定"
+                                             otherButtonTitles:nil, nil];
+
+    if (layer == self.blueLayer) {
+        
+        alerView.message = @"你点中了蓝色的Layer";
+        
+    } else if (layer == self.backgroundView.layer){
+        
+        alerView.message = @"你点中了灰色的Layer";
+        
+    } else {
+        alerView.message = @"你点中了其他的Layer";
+    }
+    
+    [alerView show];
 }
 
 @end
