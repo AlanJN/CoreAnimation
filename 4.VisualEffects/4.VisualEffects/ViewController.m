@@ -19,7 +19,8 @@
     
 //    [self layerRoundedCorners];
 //    [self layerBorders];
-    [self layerDropShadows];
+//    [self layerDropShadows];
+    [self layerShadowClipping];
 }
 
 /**
@@ -73,6 +74,27 @@
     view.layer.shadowColor = [UIColor blueColor].CGColor;
     
     [self.view addSubview:view];
+}
+
+- (void)layerShadowClipping {
+    
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    UIView *blueView = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
+    UIView *shadowView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    contentView.backgroundColor = [UIColor grayColor];
+    blueView.backgroundColor = [UIColor blueColor];
+    
+    contentView.layer.masksToBounds = YES;
+    
+    shadowView.layer.shadowOpacity = 1.0f;
+    shadowView.layer.shadowOffset = CGSizeMake(0, 0.5f);
+    shadowView.layer.shadowColor = [UIColor redColor].CGColor;
+
+    [contentView addSubview:blueView];
+    [shadowView addSubview:contentView];
+    
+    [self.view addSubview:shadowView];
 }
 
 @end
