@@ -17,7 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self layerRoundedCorners];
+//    [self layerRoundedCorners];
+//    [self layerBorders];
+    [self layerDropShadows];
 }
 
 /**
@@ -38,7 +40,39 @@
     
     [view.layer addSublayer:layer];
     [self.view addSubview:view];
+    
+    NSLog(@"%@", view.layer.borderColor);
+    NSLog(@"%f", view.layer.borderWidth);
 }
 
+/**
+ *  Layer Borders
+ */
+- (void)layerBorders {
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    view.backgroundColor = [UIColor blueColor];
+    view.layer.borderWidth = 5.f;
+    view.layer.borderColor = [UIColor redColor].CGColor;
+    
+    [self.view addSubview:view];
+}
+
+/**
+ *  Drop Shadows
+ */
+- (void)layerDropShadows {
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    
+    view.backgroundColor = [UIColor redColor];
+    view.layer.shadowOpacity = 1.0f;
+    view.layer.shadowOffset = CGSizeMake(0, 3);
+    view.layer.shadowRadius = 10.f;
+    view.layer.shadowColor = [UIColor blueColor].CGColor;
+    
+    [self.view addSubview:view];
+}
 
 @end
