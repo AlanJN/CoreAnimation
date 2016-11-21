@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A49AF1541DE36A3B00346A45 /* CLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A49AF1531DE36A3B00346A45 /* CLLabel.m */; };
 		A4AFF33F1DDCCFFA0023B2DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AFF33E1DDCCFFA0023B2DD /* main.m */; };
 		A4AFF3421DDCCFFA0023B2DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AFF3411DDCCFFA0023B2DD /* AppDelegate.m */; };
 		A4AFF3451DDCCFFA0023B2DD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AFF3441DDCCFFA0023B2DD /* ViewController.m */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A49AF1521DE36A3B00346A45 /* CLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLabel.h; sourceTree = "<group>"; };
+		A49AF1531DE36A3B00346A45 /* CLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLabel.m; sourceTree = "<group>"; };
 		A4AFF33A1DDCCFFA0023B2DD /* 6.SpecializedLayers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 6.SpecializedLayers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AFF33E1DDCCFFA0023B2DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4AFF3401DDCCFFA0023B2DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -78,6 +81,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A49AF1511DE36A3300346A45 /* CLLabel */ = {
+			isa = PBXGroup;
+			children = (
+				A49AF1521DE36A3B00346A45 /* CLLabel.h */,
+				A49AF1531DE36A3B00346A45 /* CLLabel.m */,
+			);
+			path = CLLabel;
+			sourceTree = "<group>";
+		};
 		A4AFF3311DDCCFFA0023B2DD = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +113,7 @@
 		A4AFF33C1DDCCFFA0023B2DD /* 6.SpecializedLayers */ = {
 			isa = PBXGroup;
 			children = (
+				A49AF1511DE36A3300346A45 /* CLLabel */,
 				A4AFF3401DDCCFFA0023B2DD /* AppDelegate.h */,
 				A4AFF3411DDCCFFA0023B2DD /* AppDelegate.m */,
 				A4AFF3431DDCCFFA0023B2DD /* ViewController.h */,
@@ -273,6 +286,7 @@
 				A4AFF3451DDCCFFA0023B2DD /* ViewController.m in Sources */,
 				A4AFF3421DDCCFFA0023B2DD /* AppDelegate.m in Sources */,
 				A4AFF33F1DDCCFFA0023B2DD /* main.m in Sources */,
+				A49AF1541DE36A3B00346A45 /* CLLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +512,7 @@
 				A4AFF3691DDCCFFA0023B2DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4AFF36A1DDCCFFA0023B2DD /* Build configuration list for PBXNativeTarget "6.SpecializedLayersTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +521,7 @@
 				A4AFF36C1DDCCFFA0023B2DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4AFF36D1DDCCFFA0023B2DD /* Build configuration list for PBXNativeTarget "6.SpecializedLayersUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +530,7 @@
 				A4AFF36F1DDCCFFA0023B2DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
