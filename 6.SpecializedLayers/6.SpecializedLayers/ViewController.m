@@ -25,7 +25,9 @@
 //    [self attributedString];
 //    [self createCLLabel];
 //    [self transformLayer];
-    [self gradientLayer];
+//    [self gradientLayer];
+//    [self replicatorLayer];
+    [self reflectionsLayer];
 }
 
 #pragma mark - CAShapeLayer
@@ -263,6 +265,84 @@
     [view.layer addSublayer:gradientLayer];
     
     [self.view addSubview:view];
+}
+
+#pragma mark - CAReplicatorLayer
+- (void)replicatorLayer {
+    
+    UIView *view = [[UIView alloc] init];
+    
+    view.bounds = CGRectMake(0, 0, 100, 100);
+    view.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 4.5);
+    
+    CATransform3D transform = CATransform3DIdentity;
+    
+    transform = CATransform3DTranslate(transform, 0, 200, 0);
+    transform = CATransform3DRotate(transform, M_PI / 5.0, 0, 0, 1);
+    transform = CATransform3DTranslate(transform, 0, -200, 0);
+
+    CAReplicatorLayer *replicatorLayer = [CAReplicatorLayer layer];
+    
+    replicatorLayer.frame = view.bounds;
+    replicatorLayer.instanceCount = 10;  // 复制图层个数
+    replicatorLayer.instanceBlueOffset = -1.0f; // 设置每一个图层的逐渐蓝色偏移
+    replicatorLayer.instanceRedOffset = -1.0f;  // 设置每一个图层的逐渐红色偏移
+    replicatorLayer.instanceAlphaOffset = -0.1f;
+    replicatorLayer.instanceDelay = 0.33f;  // 设置每个图层延迟0.33f
+    replicatorLayer.instanceTransform = transform;
+    
+    CALayer *layer = [CALayer layer];
+    
+    layer.frame = CGRectMake(0, 0, 100, 100);
+    layer.backgroundColor = [UIColor whiteColor].CGColor;
+    
+    [replicatorLayer addSublayer:layer];
+    
+    self.view.backgroundColor = [UIColor grayColor];
+    
+    [view.layer addSublayer:replicatorLayer];
+    
+    [self addLayerAnimation:layer];
+    
+    [self.view addSubview:view];
+}
+
+- (void)addLayerAnimation:(CALayer *)layer {
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    
+    animation.toValue =  @(layer.position.y - 25.0);
+    animation.duration = 0.5;
+    animation.autoreverses = true;
+    animation.repeatCount = CGFLOAT_MAX;
+    
+    [layer addAnimation:animation forKey:nil];
+}
+
+- (void)reflectionsLayer {
+    
+    CAReplicatorLayer *replicatorLayer = [CAReplicatorLayer layer];
+    
+    replicatorLayer.instanceCount = 2;
+    replicatorLayer.frame = CGRectMake(50, 100, 100, 100);
+
+    CALayer *layer = [CALayer layer];
+    
+    layer.contents = (__bridge id _Nullable)([UIImage imageNamed:@"github"].CGImage);
+    layer.frame = replicatorLayer.bounds;
+
+    CATransform3D transform = CATransform3DIdentity;
+    
+    transform = CATransform3DTranslate(transform, 0, layer.bounds.size.height, 0);
+    transform = CATransform3DScale(transform, 1, -1, 0);
+    
+    replicatorLayer.instanceTransform = transform;
+    replicatorLayer.instanceAlphaOffset = -0.6;
+    
+    [replicatorLayer addSublayer:layer];
+    
+    [self.view.layer addSublayer:replicatorLayer];
+    self.view.backgroundColor = [UIColor grayColor];
 }
 
 @end
