@@ -11,6 +11,7 @@
 #import "CLLabel.h"
 #import <QuartzCore/QuartzCore.h>
 #import <GLKit/GLKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController () <CALayerDelegate>
 
@@ -43,7 +44,9 @@
 //    [self addScrollLayer];
 //    [self addCATileLayer];
 //    [self addCAEmitterLayer];
-    [self addCAEAGLLayer];
+//    [self addCAEAGLLayer];
+//    [self addAVPlayerLayer];
+    [self addAVPlayerLayerTwo];
 }
 
 #pragma mark - CAShapeLayer
@@ -576,6 +579,47 @@
     [self tearDownBuffers];
     
     [EAGLContext setCurrentContext:nil];
+}
+
+#pragma mark - AVPlayerLayer
+- (void)addAVPlayerLayer {
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"demo0"
+                                         withExtension:@"m4v"];
+    
+    AVPlayer *player = [AVPlayer playerWithURL:url];
+    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+    
+    playerLayer.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [self.view.layer addSublayer:playerLayer];
+    
+    [player play];
+}
+
+- (void)addAVPlayerLayerTwo {
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"demo0"
+                                         withExtension:@"m4v"];
+    
+    AVPlayer *player = [AVPlayer playerWithURL:url];
+    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+    
+    playerLayer.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [self.view.layer addSublayer:playerLayer];
+    
+    CATransform3D transform = CATransform3DIdentity;
+    transform.m34 = -1.0 / 500.0;
+    transform = CATransform3DRotate(transform, M_PI_4, 1, 1, 0);
+    
+    playerLayer.transform = transform;
+    playerLayer.masksToBounds = YES;
+    playerLayer.cornerRadius = 30.f;
+    playerLayer.borderColor = [UIColor blueColor].CGColor;
+    playerLayer.borderWidth = 10.f;
+    
+    [player play];
 }
 
 @end
