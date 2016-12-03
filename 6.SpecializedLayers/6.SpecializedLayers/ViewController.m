@@ -9,8 +9,20 @@
 #import "ViewController.h"
 #import <CoreText/CoreText.h>
 #import "CLLabel.h"
+#import <QuartzCore/QuartzCore.h>
+#import <GLKit/GLKit.h>
 
-@interface ViewController ()
+@interface ViewController () <CALayerDelegate>
+
+@property (nonatomic, strong) CAScrollLayer *scrollLayer;
+
+@property (nonatomic, strong) EAGLContext *glContext;
+@property (nonatomic, strong) CAEAGLLayer *glLayer;
+@property (nonatomic, assign) GLuint framebuffer;
+@property (nonatomic, assign) GLuint colorRenderbuffer;
+@property (nonatomic, assign) GLuint framebufferWidth;
+@property (nonatomic, assign) GLuint framebufferHeight;
+@property (nonatomic, strong) GLKBaseEffect *effect;
 
 @end
 
@@ -27,7 +39,11 @@
 //    [self transformLayer];
 //    [self gradientLayer];
 //    [self replicatorLayer];
-    [self reflectionsLayer];
+//    [self reflectionsLayer];
+//    [self addScrollLayer];
+//    [self addCATileLayer];
+//    [self addCAEmitterLayer];
+    [self addCAEAGLLayer];
 }
 
 #pragma mark - CAShapeLayer
@@ -343,6 +359,223 @@
     
     [self.view.layer addSublayer:replicatorLayer];
     self.view.backgroundColor = [UIColor grayColor];
+}
+
+#pragma mark - CAScrollLayer
+- (void)addScrollLayer {
+    
+    CALayer *layer = [CALayer layer];
+    
+    layer.contents = (__bridge id _Nullable)([UIImage imageNamed:@"github"].CGImage);
+    layer.frame = CGRectMake(0, 0, 300, 300);
+    
+    self.scrollLayer = [CAScrollLayer layer];
+    self.scrollLayer.frame = CGRectMake(50, 100, 150, 150);
+    self.scrollLayer.scrollMode = kCAScrollBoth;
+    self.scrollLayer.backgroundColor = [UIColor grayColor].CGColor;
+    
+    [self.scrollLayer addSublayer:layer];
+    
+    [self.view.layer addSublayer:self.scrollLayer];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
+    
+    [self.view addGestureRecognizer:pan];
+}
+
+- (void)panGesture:(UIPanGestureRecognizer *)pan {
+    
+    CGPoint translocation = [pan translationInView:self.view];
+    CGPoint origin = self.scrollLayer.bounds.origin;
+    
+    origin = CGPointMake(origin.x - translocation.x, origin.y - translocation.y);
+    
+    [self.scrollLayer scrollToPoint:origin];
+    
+    [pan setTranslation:CGPointZero inView:self.view];
+}
+
+#pragma mark - CATiledLayer
+- (void)addCATileLayer {
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.width)];
+    
+    [self.view addSubview:scrollView];
+    
+    CATiledLayer *tiledLayer = [CATiledLayer layer];
+    
+    tiledLayer.frame = CGRectMake(0, 0, 2048, 2048);
+    tiledLayer.delegate = self;
+    tiledLayer.contentsScale = [UIScreen mainScreen].scale;
+    
+    [scrollView.layer addSublayer:tiledLayer];
+    
+    scrollView.contentSize = tiledLayer.frame.size;
+    
+    [tiledLayer setNeedsDisplay];
+}
+
+- (void)drawLayer:(CATiledLayer *)layer inContext:(CGContextRef)ctx {
+    
+    CGRect bounds = CGContextGetClipBoundingBox(ctx);
+    
+    NSInteger x = floor(bounds.origin.x / layer.tileSize.width);
+    NSInteger y = floor(bounds.origin.y / layer.tileSize.height);
+    
+    NSString *imageName = [NSString stringWithFormat:@"image%02zd_%02zd", x, y];
+    
+    UIImage *tileImage = [UIImage imageNamed:imageName];
+    
+    UIGraphicsPushContext(ctx);
+    
+    [tileImage drawInRect:bounds];
+    
+    UIGraphicsPopContext();
+}
+
+#pragma mark - CAEmitterLayer
+- (void)addCAEmitterLayer {
+    
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 100,
+                                                                   self.view.frame.size.width,
+                                                                   self.view.frame.size.width)];
+    
+    [self.view addSubview:contentView];
+    
+    CAEmitterLayer *emitterLayer = [CAEmitterLayer layer];
+    
+    emitterLayer.frame = contentView.bounds;
+    emitterLayer.renderMode = kCAEmitterLayerAdditive;
+    emitterLayer.emitterPosition = CGPointMake(emitterLayer.frame.size.width / 2,
+                                               emitterLayer.frame.size.height / 2);
+    
+    [contentView.layer addSublayer:emitterLayer];
+    
+    CAEmitterCell *cell = [[CAEmitterCell alloc] init];
+    
+    cell.contents = (__bridge id _Nullable)([UIImage imageNamed:@"fire"].CGImage);
+    cell.birthRate = 150;
+    cell.lifetime = 5.0;
+    cell.color = [UIColor colorWithRed:1.f
+                                 green:0.5f
+                                  blue:0.1f
+                                 alpha:1.0f].CGColor;
+    cell.alphaSpeed = -0.4f;
+    cell.velocity = 50.f;
+    cell.velocityRange = 50.f;
+    cell.emissionRange = M_PI * 2.0f;
+    
+    emitterLayer.emitterCells = @[cell];
+}
+
+#pragma mark - CAEAGLLayer
+- (void)addCAEAGLLayer {
+    
+    UIView *glView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.width)];
+    
+    [self.view addSubview:glView];
+    
+    // 设置Context
+    self.glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    
+    [EAGLContext setCurrentContext:self.glContext];
+    
+    // 设置显示的Layer
+    self.glLayer = [CAEAGLLayer layer];
+    self.glLayer.frame = glView.bounds;
+    [glView.layer addSublayer:self.glLayer];
+    self.glLayer.drawableProperties = @{kEAGLDrawablePropertyRetainedBacking : @NO,
+                                        kEAGLDrawablePropertyColorFormat : kEAGLColorFormatRGBA8};
+    
+    self.effect = [[GLKBaseEffect alloc] init];
+    
+    [self setUpBuffers];
+    [self drawFrame];
+}
+
+- (void)setUpBuffers {
+    
+    // 设置Frame
+    glGenFramebuffers(1, &_framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+    
+    // 设置颜色
+    glGenRenderbuffers(1, &_colorRenderbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                              GL_RENDERBUFFER, _colorRenderbuffer);
+    
+    [self.glContext renderbufferStorage:GL_RENDERBUFFER
+                           fromDrawable:self.glLayer];
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH,
+                                 &_framebufferWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT,
+                                 &_framebufferHeight);
+    
+    // 检查是否成功
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        
+        NSLog(@"%i", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+    }
+}
+
+- (void)tearDownBuffers {
+    
+    if (_framebuffer) {
+        
+        glDeleteFramebuffers(1, &_framebuffer);
+        _framebuffer = 0;
+    }
+    
+    if (_colorRenderbuffer) {
+        
+        glDeleteRenderbuffers(1, &_colorRenderbuffer);
+        _colorRenderbuffer = 0;
+    }
+}
+
+- (void)drawFrame {
+    
+    // 绑定缓冲区
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+    glViewport(0, 0, _framebufferWidth, _framebufferHeight);
+    
+    [self.effect prepareToDraw];
+    
+    // 清空屏幕
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    
+    // 设置顶点
+    GLfloat vertices[] = {
+        -0.5f, -0.5f, -1.0f,
+        0.0f, 0.5f, -1.0f,
+        0.5f, -0.5f, -1.0f};
+    
+    // 设置颜色值
+    GLfloat colors[] = {
+        0.0f, 0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 0.0f, 1.0f};
+    
+    // 开始画三角形
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(GLKVertexAttribPosition,
+                          3, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(GLKVertexAttribColor,
+                          4, GL_FLOAT, GL_FALSE, 0, colors);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    
+    // 渲染
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+    [self.glContext presentRenderbuffer:GL_RENDERBUFFER];
+}
+
+- (void)dealloc {
+    [self tearDownBuffers];
+    
+    [EAGLContext setCurrentContext:nil];
 }
 
 @end
